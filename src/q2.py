@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 
 import numpy as np
@@ -6,12 +7,11 @@ from PIL import Image
 
 pixel_values = [(255, 0, 0), (0, 255, 0), (0, 0, 255), (0, 0, 0), (255, 255, 255)]
 color_names = ["red", "green", "blue", "black", "white"]
-image_path = Path("images")
 
 
 def count_pixels(image: Image.Image, color: tuple[int, int, int]) -> int:
     pixels: npt.NDArray[np.uint8] = np.asarray(image)
-    return np.count_nonzero(np.all(pixels[:, :] == color, axis=2))
+    return (pixels == color).all(axis=2).sum()
 
 
 def make_color_images() -> None:
@@ -28,6 +28,10 @@ def pixel_report(image_path: Path) -> list[int]:
     image: Image.Image = Image.open(image_path).convert("RGB")
     return [count_pixels(image, pixel) for pixel in pixel_values]
 
+
+image_path = Path("images")
+if not image_path.exists():
+    os.mkdir(image_path)
 
 make_color_images()
 
