@@ -21,7 +21,7 @@ if not plots_path.exists():
 plt.savefig(plots_path.joinpath("color_channels_hist.svg"))
 plt.show()
 
-luma = np.average(image_array, axis=2)
+luma = np.average(image_array, axis=2).round()
 
 fig, ax = plt.subplots()
 hist(ax, luma, "gray")
