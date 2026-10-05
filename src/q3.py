@@ -33,7 +33,7 @@ images_dir = Path("images/q3/")
 if not images_dir.exists():
     os.mkdir(images_dir)
 
-fig, axs = plt.subplots(2, (len(gamma_values) + 1) // 2)
+fig, axs = plt.subplots(1, len(gamma_values) + 1)
 
 images = [gamma_correct(selfie_image, gamma) for gamma in gamma_values]
 

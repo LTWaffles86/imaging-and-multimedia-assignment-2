@@ -5,13 +5,14 @@ import numpy as np
 import numpy.typing as npt
 from PIL import Image
 
-pixel_values = [(255, 0, 0), (0, 255, 0), (0, 0, 255), (0, 0, 0), (255, 255, 255)]
-color_names = ["red", "green", "blue", "black", "white"]
-
 
 def count_pixels(image: Image.Image, color: tuple[int, int, int]) -> int:
     pixels: npt.NDArray[np.uint8] = np.asarray(image)
     return (pixels == color).all(axis=2).sum()
+
+
+pixel_values = [(255, 0, 0), (0, 255, 0), (0, 0, 255), (0, 0, 0), (255, 255, 255)]
+color_names = ["red", "green", "blue", "black", "white"]
 
 
 def make_color_images() -> None:
@@ -35,15 +36,15 @@ if not image_path.exists():
 
 make_color_images()
 
-headers = ["Filepath"] + color_names
-column_widths = [20] + [5] * len(color_names)
+headers = ["filename"] + color_names
+column_widths = [12] + [5] * len(color_names)
 for header, width in zip(headers, column_widths):
     print(f"{header:<{width}}", end=" ")
 print()
 
 for file_path in image_path.iterdir():
     if file_path.is_file():
-        print(f"{file_path!s:{column_widths[0]}}", end=" ")
+        print(f"{file_path.name!s:{column_widths[0]}}", end=" ")
         report = pixel_report(file_path)
         for count, width in zip(report, column_widths[1:]):
             print(f"{count:>{width}}", end=" ")
