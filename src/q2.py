@@ -42,8 +42,9 @@ for header, width in zip(headers, column_widths):
 print()
 
 for file_path in image_path.iterdir():
-    print(f"{file_path!s:{column_widths[0]}}", end=" ")
-    report = pixel_report(file_path)
-    for count, width in zip(report, column_widths[1:]):
-        print(f"{count:>{width}}", end=" ")
-    print()
+    if file_path.is_file():
+        print(f"{file_path!s:{column_widths[0]}}", end=" ")
+        report = pixel_report(file_path)
+        for count, width in zip(report, column_widths[1:]):
+            print(f"{count:>{width}}", end=" ")
+        print()
